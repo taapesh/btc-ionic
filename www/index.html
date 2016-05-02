@@ -19,16 +19,69 @@
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
+    <script   src="https://code.jquery.com/jquery-1.11.3.min.js"   integrity="sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g="   crossorigin="anonymous"></script>
     <script src="js/app.js"></script>
   </head>
-  <body ng-app="starter">
-
+  <body ng-app="btc" ng-controller="BtcCtrl">
     <ion-pane>
       <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
+        <h1 class="title">Ionic Bitcoin</h1>
+        <button class="button button-icon" ng-click="newTask()">
+        <i class="icon ion-ios-plus-empty"></i>
+      </button>
       </ion-header-bar>
       <ion-content>
+        <h3>Overview</h3>
+        <ion-item>
+          <div ng-bind="btcPrice">{{ btcPrice }}</div>
+          <div ng-bind="btcTotal">{{ btcTotal }}</div>
+          <div ng-bind="usdTotal">{{ usdTotal }}</div>
+          <button class="button" ng-click="newTask()">+ Add New Address</button>
+        </ion-item>
+
+        <h3>Addresses</h3>
+        <ion-list>
+          <ion-item ng-repeat="info in addressInfo">
+            <div>{{ info.address }}</div>
+            <div>{{ info.balance }}</div>
+            <div>{{ info.usd }}</div>
+          </ion-item>
+        </ion-list>        
       </ion-content>
     </ion-pane>
+
+    <script id="new-task.html" type="text/ng-template">
+
+      <div class="modal">
+
+        <!-- Modal header bar -->
+        <ion-header-bar class="bar-secondary">
+          <h1 class="title">New Address</h1>
+          <button class="button button-clear button-positive" ng-click="closeNewTask()">Cancel</button>
+        </ion-header-bar>
+
+        <!-- Modal content area -->
+        <ion-content>
+
+          <form ng-submit="createTask(address)">
+            <div class="list">
+              <label class="item item-input">
+                <input type="text" placeholder="Bitcoin Address e.g. 15ZGJX9H3NS2xvujrKH39ZLy9Q9orJ3hzj" ng-model="address.address">
+              </label>
+              <label class="item item-input">
+                <input type="text" placeholder="Label for this address e.g. Main Address" ng-model="address.label">
+              </label>
+            </div>
+            <div class="padding">
+              <button type="submit" class="button button-block button-positive">Save</button>
+            </div>
+          </form>
+
+        </ion-content>
+
+      </div>
+
+    </script>
+
   </body>
 </html>
